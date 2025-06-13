@@ -19,7 +19,7 @@ def list_to_index_alpha_beta (alpha,beta):
     return ind_a*max_val + ind_b
 
 def index_to_lst_alpha_beta (index,n):
-    """returns the entries alpha and beta defined as list to the corresponding index"""
+    """returns the entries alpha and beta defined as list to the corresponding index for system size n"""
     ind_a, ind_b = divmod(index,4**n)
     alpha = to_basis(ind_a,4)
     beta = to_basis(ind_b,4)
@@ -45,7 +45,7 @@ def list_to_index_r_s (r,s):
     return ind_a*max_val + ind_b
 
 def index_to_lst_r_s (index,n):
-    """returns the entries alpha and beta defined as list to the corresponding index"""
+    """returns the entries alpha and beta defined as list to the corresponding index for system size n"""
     ind_r, ind_s = divmod(index,6**n)
     r = to_basis(ind_r,6)
     s = to_basis(ind_s,6)
