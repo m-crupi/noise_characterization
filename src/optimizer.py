@@ -2,17 +2,34 @@ import scipy
 from .utils import *
 
 def f_alpha_beta():
-    """tr[r sigma_alpha s sigma_beta] with r and s in the basis (+,-,+i,-i,0,1) and sigma_a,sigma_b = Id,X,Y,Z"""
+    """tr[r sigma_alpha s sigma_beta] with r and s in the basis (+,-,+i,-i,0,1) and sigma_alpha,sigma_beta = Id,X,Y,Z
+
+    Returns:
+        ndarray: corresponding matrix with index [alpha*4+beta,6*r+s]
+    """
     f_ab = np.array(np.array([[1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j ],[ 1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,-1. +0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j],[ 0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0. +0.j,-1. +0.j,  -0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j],[ 0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j,   0.5+0.j,  -0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0. +0.j,-1. +0.j],[ 1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,-1. +0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j],[ 1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j],[ 0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j,  -0.5+0.j,   0.5+0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j, -0.5+0.j,   0.5+0.j,   0. +0.j,0. +0.j,   0. -0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,0. +0.j,   0. +1.j,   0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -1.j,0. +0.j, ],[ 0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. +0.5j,  0. -0.5j, -0.5+0.j,   0.5+0.j,   0. -0.5j,  0. -0.5j,0. +0.j,   0. -1.j,   0. -0.5j,  0. -0.5j,  0. +0.5j,  0. +0.5j,  0. +1.j,0. +0.j,   0. +0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,0. +0.j,   0. +0.j,  -0.5+0.j,   0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j],[ 0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0. +0.j,-1. +0.j,  -0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j], [ 0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j,  -0.5+0.j,   0.5+0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j, -0.5+0.j,   0.5+0.j,   0. +0.j,0. +0.j,   0. +0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,0. +0.j,   0. -1.j,   0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +1.j,0. +0.j],[ 0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j],[ 0. +0.j,   0. +1.j,   0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. -1.j,0. +0.j,   0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. +0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j,  -0.5+0.j,   0.5+0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j, -0.5+0.j,   0.5+0.j,   0. +0.j,0. +0.j ],[ 0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j,   0.5+0.j,  -0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,  -0.5+0.j,   0. +0.j,-1. +0.j ],[ 0. +0.j,   0. +0.j,   0. -0.5j,  0. +0.5j,  0.5+0.j,  -0.5+0.j,   0. +0.j,0. +0.j,   0. -0.5j,  0. +0.5j, -0.5+0.j,   0.5+0.j,   0. +0.5j,  0. +0.5j,0. +0.j,   0. +1.j,   0. +0.5j,  0. +0.5j,  0. -0.5j,  0. -0.5j,  0. -1.j,0. +0.j,   0. -0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,   0. -0.5j,  0. +0.5j,0. +0.j,   0. +0.j,  -0.5+0.j,   0.5+0.j,   0. -0.5j,  0. +0.5j,  0. +0.j,0. +0.j ],[ 0. +0.j,   0. -1.j,   0. -0.5j,  0. -0.5j,  0. -0.5j,  0. -0.5j,  0. +1.j,0. +0.j,   0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. +0.5j,  0. -0.5j,0. +0.j,   0. +0.j,   0.5+0.j,  -0.5+0.j,   0. +0.5j,  0. -0.5j,  0. +0.j,0. +0.j,  -0.5+0.j,   0.5+0.j,   0. +0.5j,  0. -0.5j,  0.5+0.j,  -0.5+0.j,0. +0.j,   0. +0.j,   0. +0.5j,  0. -0.5j, -0.5+0.j,   0.5+0.j,   0. +0.j,0. +0.j ],[ 0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,0. +0.j,   1. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   1. +0.j,0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,1. +0.j,   0. +0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0.5+0.j,   0. +0.j,1. +0.j ]]).T,dtype = 'complex128')
     return f_ab/18
 
 def g_alpha_beta ():
-    """Function that given r and s in the basis (+,-,+i,-i,0,1) and returns g_alpha_beta with sigma_a,sigma_b = Id,X,Y,Z"""
+    """Function that given r and s in the basis (+,-,+i,-i,0,1) and returns g_alpha_beta with sigma_a,sigma_b = Id,X,Y,Z
+        
+    Returns:
+        ndarray: corresponding matrix with index [6*r+s,alpha*4+beta]
+    """
     f_ab = f_alpha_beta()
     return np.linalg.pinv(f_ab)
 
 def g_entry_optimal_1q (U, gd):
-    """Computes the optimized entry gd with respect to the evolution defined by U (single qubit)"""
+    """Computes the optimized entry gd with respect to the evolution defined by U (single qubit)
+    
+    Args:
+        U (ndarray): single qubit uniraty transformation over which to optimize g
+        gd (int): entry of g to minimize
+
+    Returns:
+        ndarray: minimized entry gd of g
+        float: minimized value
+    """
     f_ab = f_alpha_beta()
     g_ab = g_alpha_beta()
     chi = chi_from_U(U)
@@ -31,7 +48,16 @@ def g_entry_optimal_1q (U, gd):
     return g_U_opt, val_opt
 
 def g_entry_optimal_2q (U,gd):
-    """Computes the optimized entry gd with respect to the evolution defined by U (two qubits)"""
+    """Computes the optimized entry gd with respect to the evolution defined by U (two qubits)
+    
+    Args:
+        U (ndarray): two-qubit uniraty transformation over which to optimize g
+        gd (int): entry of g to minimize
+
+    Returns:
+        ndarray: minimized entry gd of g
+        float: minimized value
+    """
     f_ab = f_alpha_beta()
     F_ab = np.kron(f_ab,f_ab)
     g_ab = g_alpha_beta()
@@ -53,7 +79,16 @@ def g_entry_optimal_2q (U,gd):
     return g_U_opt, val_opt
 
 def g_entry_optimal (Un,gd):
-    """Computes the optimized entry gd with respect to the evolution defined by U (one or two qubits)"""
+    """Computes the optimized entry gd with respect to the evolution defined by U (one or two qubits)
+
+    Args:
+        U (ndarray): single or two qubit uniraty transformation over which to optimize g
+        gd (int): entry of g to minimize
+
+    Returns:
+        ndarray: minimized entry gd of g
+        float: minimized value
+    """
     if np.allclose(np.shape(Un),2):
         g_U_opt, val_opt = g_entry_optimal_1q (Un,gd)  
     if np.allclose(np.shape(Un),4):
@@ -63,7 +98,15 @@ def g_entry_optimal (Un,gd):
     return g_U_opt, val_opt
 
 def g_optimal (Un):
-    """Computes the optimized function with respect to the evolution defined by U (one or two qubits)"""
+    """Computes the optimized function with respect to the evolution defined by U (one or two qubits)
+    
+    Args:
+        U (ndarray): uniraty single qubit transformation over which to optimize g
+
+    Returns:
+        ndarray: minimized g over all entries 
+        float: minimized value
+    """
     if np.allclose(np.shape(Un),2):
         g_op_lst = []
         for gd in range(16):
