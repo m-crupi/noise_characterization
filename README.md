@@ -1,6 +1,6 @@
 # Optimized `g` Function Generator for Quantum Gates
 
-This repository contains Python tools to generate the optimized `g` function as defined in our paper, for specific quantum unitary transformations (currently one- and two-qubit gates).
+This repository contains Python tools to generate the optimized `g` function as defined [here]() (Eq. (34)), for specific quantum unitary transformations (currently one- and two-qubit gates).
 
 The `g` function can be computed fully or queried at a specific entry `(α, β)`, depending on your needs. The repository also includes precomputed examples for commonly used gates.
 
